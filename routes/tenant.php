@@ -5,7 +5,6 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Route;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
-use App\Http\Controllers\App\ProfileController;
 use App\Http\Controllers\Redirect\RedirectController;
 use App\Http\Controllers\App\Admin\Dashboard\DashboardController;
 /*
@@ -31,13 +30,12 @@ Route::middleware([
 
     Route::get('/redirect-two',[RedirectController::class, 'dashboardApp']);
 
-    Route::get('/app/admin/dashboard',[DashboardController::class,'index'])->middleware('can:app.admin.dashboard')->name('app.admin.dashboard');
-
-    Route::middleware('auth')->group(function () {
-        Route::get('/app/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::patch('/app/profile', [ProfileController::class, 'update'])->name('profile.update');
-        Route::delete('/app/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::middleware('appuserauth')->prefix('app/admin')->group(function () {
+        Route::get('/dashboard',[DashboardController::class,'index'])->name('app.admin.dashboard');
     });
 
-    require __DIR__.'/app_auth.php';
+    Route::get('/app/login',[DashboardController::class,'login'])->name('app.admin.login');
+    Route::post('/app/login/store',[DashboardController::class,'store'])->name('app.admin.login.store');
+    Route::get('/app/logout',[DashboardController::class,'logout'])->name('app.admin.logout');
+
 });

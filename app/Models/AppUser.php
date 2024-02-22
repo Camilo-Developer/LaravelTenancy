@@ -8,12 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
-class User extends Authenticatable
+class AppUser extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
-    protected $connection = 'mysql';
-
+    protected $connection = 'tenant';
+    protected $table = 'users';
     /**
      * The attributes that are mass assignable.
      *

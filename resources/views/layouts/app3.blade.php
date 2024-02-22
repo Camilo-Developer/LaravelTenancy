@@ -33,7 +33,7 @@
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
-    <form action="{{route('app.logout')}}" method="post" id="cerrar">
+    <form action="{{route('app.admin.logout')}}" method="post" id="cerrar">
         @csrf
     </form>
 {{--    <div class="preloader loader flex-column justify-content-center align-items-center">
@@ -57,7 +57,7 @@
                 </li>
                 <li class="nav-item">
                     <div class="background background--light">
-                        <button id="cerrar-button" class="logoutButton logoutButton--dark" style="--figure-duration: 100; --transform-figure: none; --walking-duration: 100; --transform-arm1: none; --transform-wrist1: none; --transform-arm2: none; --transform-wrist2: none; --transform-leg1: none; --transform-calf1: none; --transform-leg2: none; --transform-calf2: none;">
+                        <a href="{{route('app.admin.logout')}}"  class="logoutButton logoutButton--dark" style="--figure-duration: 100; --transform-figure: none; --walking-duration: 100; --transform-arm1: none; --transform-wrist1: none; --transform-arm2: none; --transform-wrist2: none; --transform-leg1: none; --transform-calf1: none; --transform-leg2: none; --transform-calf2: none;">
                             <svg class="doorway" viewBox="0 0 100 100">
                                 <path d="M93.4 86.3H58.6c-1.9 0-3.4-1.5-3.4-3.4V17.1c0-1.9 1.5-3.4 3.4-3.4h34.8c1.9 0 3.4 1.5 3.4 3.4v65.8c0 1.9-1.5 3.4-3.4 3.4z"></path>
                                 <path class="bang" d="M40.5 43.7L26.6 31.4l-2.5 6.7zM41.9 50.4l-19.5-4-1.4 6.3zM40 57.4l-17.7 3.9 3.9 5.7z"></path>
@@ -87,7 +87,7 @@
                                 <circle cx="66" cy="50" r="3.7"></circle>
                             </svg>
                             <span class="button-text">Cerrar</span>
-                        </button>
+                        </a>
                     </div>
                 </li>
             </ul>
@@ -105,11 +105,11 @@
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
 
                 <div class="image">
-                    <img src="https://ui-avatars.com/api/?name={{ substr(auth()->user()->name, 0, 1) . substr(auth()->user()->lastname, 0, 1) }}&color=7F9CF5&background=EBF4FF" class="img-circle elevation-2" alt="User Image">
+                    <img src="https://ui-avatars.com/api/?name={{ substr(auth()->guard('appuser')->user()->name, 0, 1) }}&color=7F9CF5&background=EBF4FF" class="img-circle elevation-2" alt="User Image">
                 </div>
 
                 <div class="info">
-                        <a href="{{route('app.admin.dashboard')}}" class="d-block">{{auth()->user()->name}} {{auth()->user()->lastname}}</a>
+                        <a href="{{route('app.admin.dashboard')}}" class="d-block">{{auth()->guard('appuser')->user()->name}}</a>
                 </div>
             </div>
             <!-- Sidebar Menu -->
@@ -127,14 +127,14 @@
                     <li class="nav-header">Accesos</li>
 
                     <li class="nav-header ">Configuraciones</li>
-                    <li class="nav-item" title="{{auth()->user()->email}}">
+                    <li class="nav-item" title="{{auth()->guard('appuser')->user()->email}}">
                         <a   class="nav-link disabled">
                             <i class="nav-icon far fa-envelope"></i>
-                            <p>{{auth()->user()->email}}</p>
+                            <p>{{auth()->guard('appuser')->user()->email}}</p>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a style="cursor: pointer;" onclick="document.getElementById('cerrar').submit()" class="nav-link">
+                        <a style="cursor: pointer;" href="{{route('app.admin.logout')}}" class="nav-link">
                             <i class="nav-icon fas fa-sign-out-alt"></i>
                             <p>Cerrar Sesión</p>
                         </a>
